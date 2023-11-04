@@ -1,0 +1,289 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6pgsrva27qjn"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_hrtbj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_psb3j"]
+noise_type = 3
+frequency = 0.417
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4l2ri"]
+noise = SubResource("FastNoiseLite_psb3j")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q2xrq"]
+albedo_color = Color(0, 0.694118, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_4l2ri")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_de3rg"]
+material = SubResource("StandardMaterial3D_q2xrq")
+size = Vector2(4, 4)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aegwi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m3qh7"]
+noise = SubResource("FastNoiseLite_aegwi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k1h1c"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_m3qh7")
+
+[sub_resource type="SphereMesh" id="SphereMesh_6nvgn"]
+material = SubResource("StandardMaterial3D_k1h1c")
+radius = 0.05
+height = 0.1
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_miuoa"]
+albedo_color = Color(0, 0, 1, 1)
+disable_receive_shadows = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_xartr"]
+material = SubResource("StandardMaterial3D_miuoa")
+size = Vector3(0.05, 1, 0.05)
+
+[sub_resource type="PrismMesh" id="PrismMesh_8run4"]
+size = Vector3(0.2, 0.2, 0.1)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_hrtbj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimePanel" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+anchor_left = 0.0277778
+anchor_top = 0.851852
+anchor_right = 0.986111
+anchor_bottom = 0.950617
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeCheckBox" type="CheckBox" parent="CanvasLayer/Control/TimePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.0289855
+anchor_top = 0.25
+anchor_right = 0.0507246
+anchor_bottom = 0.625
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/Control/TimePanel"]
+layout_mode = 0
+anchor_left = 0.0652174
+anchor_top = 0.25
+anchor_right = 0.172101
+anchor_bottom = 0.65625
+text = "Is time running"
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeMultiplier" type="LineEdit" parent="CanvasLayer/Control/TimePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.217391
+anchor_top = 0.25
+anchor_right = 0.289855
+anchor_bottom = 0.734375
+offset_left = 1.52588e-05
+text = "1.0"
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeMultiplierLabel" type="Label" parent="CanvasLayer/Control/TimePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.304348
+anchor_top = 0.25
+anchor_right = 0.411232
+anchor_bottom = 0.65625
+text = "Time multiplier"
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeSlider" type="HSlider" parent="CanvasLayer/Control/TimePanel"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.456522
+anchor_top = 0.625
+anchor_right = 0.985507
+anchor_bottom = 0.875
+max_value = 1.0
+step = 0.017
+metadata/_edit_use_anchors_ = true
+
+[node name="Time" type="Label" parent="CanvasLayer/Control/TimePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.681159
+anchor_top = 0.125
+anchor_right = 0.788044
+anchor_bottom = 0.53125
+text = "Time"
+metadata/_edit_use_anchors_ = true
+
+[node name="VariablePane" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0347222
+anchor_top = 0.0740741
+anchor_right = 0.256944
+anchor_bottom = 0.432099
+metadata/_edit_use_anchors_ = true
+
+[node name="Volume" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.0689655
+anchor_right = 0.75
+anchor_bottom = 0.206897
+text = "Volume:"
+metadata/_edit_use_anchors_ = true
+
+[node name="VolumeEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 0
+anchor_left = 0.34375
+anchor_top = 0.0689655
+anchor_right = 0.605713
+anchor_bottom = 0.202586
+text = "0.0052"
+metadata/_edit_use_anchors_ = true
+
+[node name="DragCoefficient" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.206897
+anchor_right = 0.75
+anchor_bottom = 0.344828
+text = "Drag Coefficient:"
+metadata/_edit_use_anchors_ = true
+
+[node name="DragEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 0
+anchor_left = 0.59375
+anchor_top = 0.202586
+anchor_right = 0.855713
+anchor_bottom = 0.336207
+text = "0.47"
+metadata/_edit_use_anchors_ = true
+
+[node name="AreaCrossSection" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.344828
+anchor_right = 0.75
+anchor_bottom = 0.482759
+text = "Area of Cross Section:"
+metadata/_edit_use_anchors_ = true
+
+[node name="CrossSectionArea" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 0
+anchor_left = 0.75
+anchor_top = 0.344828
+anchor_right = 1.01196
+anchor_bottom = 0.478448
+text = "0.008"
+metadata/_edit_use_anchors_ = true
+
+[node name="ObjectOffset" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.482759
+anchor_right = 0.75
+anchor_bottom = 0.62069
+text = "Object Offset:"
+metadata/_edit_use_anchors_ = true
+
+[node name="ObjectEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.482759
+anchor_right = 0.761963
+anchor_bottom = 0.616379
+text = "-0.5"
+metadata/_edit_use_anchors_ = true
+
+[node name="DogOffset" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.62069
+anchor_right = 0.75
+anchor_bottom = 0.758621
+text = "Dog Offset:"
+metadata/_edit_use_anchors_ = true
+
+[node name="DogEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 0
+anchor_left = 0.4375
+anchor_top = 0.62069
+anchor_right = 0.699463
+anchor_bottom = 0.75431
+text = "1.0"
+metadata/_edit_use_anchors_ = true
+
+[node name="TrackingOffset" type="Label" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.75431
+anchor_right = 0.75
+anchor_bottom = 0.892241
+text = "Tracking Offset: "
+metadata/_edit_use_anchors_ = true
+
+[node name="TrackingEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5625
+anchor_top = 0.758621
+anchor_right = 0.824463
+anchor_bottom = 0.892241
+text = "-0.03"
+metadata/_edit_use_anchors_ = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, 0.75, -0.433013, 0, 0.5, 0.866025, 0.866025, -0.433013, 0.25, 0, 4, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1, 3)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_de3rg")
+
+[node name="Object" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object"]
+mesh = SubResource("SphereMesh_6nvgn")
+skeleton = NodePath("../..")
+
+[node name="VelocityArrow" type="Node3D" parent="Object"]
+rotation_edit_mode = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Object/VelocityArrow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("PrismMesh_xartr")
+skeleton = NodePath("../..")
+
+[node name="Dog" type="Node3D" parent="."]
+transform = Transform3D(0.0174524, 0.999848, -8.74228e-08, 0.999848, -0.0174524, 0, -1.52573e-09, -8.74095e-08, -1, 0.5, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Dog"]
+transform = Transform3D(-1.31134e-07, -1, -8.74228e-08, -1, 1.31134e-07, 0, 1.14641e-14, 8.74228e-08, -1, 0.1, 0, 1.74846e-08)
+mesh = SubResource("PrismMesh_8run4")
+
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/VolumeEdit" to="." method="_on_volume_edit_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/DragEdit" to="." method="_on_drag_edit_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/CrossSectionArea" to="." method="_on_cross_section_area_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/ObjectEdit" to="." method="_on_object_edit_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/DogEdit" to="." method="_on_dog_edit_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/VariablePane/TrackingEdit" to="." method="_on_tracking_edit_text_submitted"]
