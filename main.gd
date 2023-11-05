@@ -84,10 +84,6 @@ func get_y_velocity(time: float) -> float:
 	return ((k * v + gravity) * pow(e, time) - gravity) / k
 
 
-func set_dog_position(x_position: float) -> void:
-	$Dog.position.x = x_position + 1.0
-
-
 func get_dog_angle(time: float, dog_x_position: float) -> float:
 	var positive_angle := atan(get_y_position(time) / abs(dog_x_position - (get_x_position(time) + object_x_offset)))
 	

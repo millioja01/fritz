@@ -238,14 +238,14 @@ anchor_bottom = 0.583333
 text = "1.0"
 metadata/_edit_use_anchors_ = true
 
-[node name="TrackingOffset" type="Label" parent="CanvasLayer/Control/VariablePane"]
+[node name="TrackingConstant" type="Label" parent="CanvasLayer/Control/VariablePane"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0643939
 anchor_top = 0.583333
 anchor_right = 0.575758
 anchor_bottom = 0.694444
-text = "Tracking Offset: "
+text = "Tracking Constant: "
 metadata/_edit_use_anchors_ = true
 
 [node name="TrackingEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePane"]
