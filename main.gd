@@ -122,14 +122,28 @@ func _on_volume_edit_text_changed(new_text: String) -> void:
 	volume = new_text.to_float()
 
 
-func _on_drag_edit_text_changed(new_text: String) -> void:
+func _on_drag_edit_x_text_changed(new_text: String) -> void:
 	if new_text.to_float() == 0.0:
 		return
 	
 	drag_coefficient = new_text.to_float()
 
 
-func _on_cross_section_area_text_changed(new_text: String) -> void:
+func _on_cross_section_area_x_text_changed(new_text: String) -> void:
+	if new_text.to_float() == 0.0:
+		return
+	
+	area_of_cross_section = new_text.to_float()
+
+
+func _on_drag_edit_y_text_changed(new_text: String) -> void:
+	if new_text.to_float() == 0.0:
+		return
+	
+	drag_coefficient = new_text.to_float()
+
+
+func _on_cross_section_area_y_text_changed(new_text: String) -> void:
 	if new_text.to_float() == 0.0:
 		return
 	
