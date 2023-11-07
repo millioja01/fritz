@@ -15,7 +15,8 @@ var volume := 0.0052 # l
 var drag_coefficient := 0.47 # Cd
 var area_of_cross_section := 0.008 # Ac
 var simulation_time := 0.0 # t
-var tracking_constant := -0.03
+var tracking_constant := 1.0
+var tracking_weighting := 1.0
 
 
 func _input(event: InputEvent) -> void:
@@ -41,10 +42,13 @@ func _physics_process(delta: float) -> void:
 	
 	update_dog_angle(simulation_time, $Dog.position.x)
 	$Dog.position.x = get_sum_of_dog_change(delta, simulation_time) + dog_x_offset
+	
+	print(rad_to_deg(get_tracking_angle(simulation_time, $Dog.position.x)))
+#	print(get_x_velocity(simulation_time))
 
 
 func set_object_position(x_position: float, y_position: float) -> void:
-	$Object.position.x = x_position + object_x_offset
+	$Object.position.x = x_position
 	$Object.position.y = y_position
 
 
@@ -58,7 +62,7 @@ func get_x_position(time: float) -> float:
 	var n := initial_velocity * cos(initial_angle)
 	var c2 := -n / k
 	
-	return (n / k) * pow(e, k * time) + c2
+	return (n / k) * pow(e, k * time) + c2 + object_x_offset
 
 
 func get_x_velocity(time: float) -> float:
@@ -85,9 +89,9 @@ func get_y_velocity(time: float) -> float:
 
 
 func get_dog_angle(time: float, dog_x_position: float) -> float:
-	var positive_angle := atan(get_y_position(time) / abs(dog_x_position - (get_x_position(time) + object_x_offset)))
+	var positive_angle := atan(get_y_position(time) / abs(dog_x_position - (get_x_position(time))))
 	
-	if dog_x_position - (get_x_position(time) + object_x_offset) < 0.0:
+	if dog_x_position - (get_x_position(time)) < 0.0:
 		return TAU / 2 - positive_angle
 	
 	return positive_angle
@@ -97,12 +101,25 @@ func get_velocity_angle(time: float, dog_x_position: float) -> float:
 	return atan(get_y_velocity(time) / get_x_velocity(time)) + get_dog_angle(time, dog_x_position)
 
 
+func get_tracking_angle(time: float, dog_x_position: float) -> float:
+	var velocity_point := Vector2(get_x_position(time), get_y_position(time))
+	velocity_point += tracking_constant * Vector2(get_x_velocity(time), get_y_velocity(time))
+	var angle := atan(velocity_point.y / (velocity_point.x - dog_x_position))
+	
+	if angle < 0.0:
+		angle += TAU / 2
+	if velocity_point.y < 0.0:
+		angle += TAU / 2
+	
+	return angle
+
+
 func update_dog_angle(time: float, dog_x_position: float) -> void:
 	$Dog.rotation.z = get_dog_angle(time, dog_x_position)
 
 
 func get_change_in_dog_position(time: float, dog_x_position: float) -> float:
-	return tracking_constant * get_x_velocity(time) * cos(get_velocity_angle(time, dog_x_position) - get_dog_angle(time, dog_x_position))
+	return 0.1 * cos(get_tracking_angle(time, dog_x_position))
 
 
 func get_sum_of_dog_change(delta: float, time: float) -> float:
@@ -111,7 +128,6 @@ func get_sum_of_dog_change(delta: float, time: float) -> float:
 	while current_time <= time:
 		sum_of_change += get_change_in_dog_position(current_time, sum_of_change + dog_x_offset)
 		current_time += delta
-	
 	return sum_of_change
 
 
@@ -169,6 +185,13 @@ func _on_tracking_edit_text_changed(new_text: String) -> void:
 		return
 	
 	tracking_constant = new_text.to_float()
+
+
+func _on_weight_edit_text_changed(new_text: String) -> void:
+	if new_text.to_float() == 0.0:
+		return
+	
+	tracking_weighting = new_text.to_float()
 
 
 func _on_velocity_edit_text_changed(new_text: String) -> void:
