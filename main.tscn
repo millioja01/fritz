@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6pgsrva27qjn"]
+[gd_scene load_steps=16 format=3 uid="uid://c6pgsrva27qjn"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_hrtbj"]
 [ext_resource type="Script" path="res://overlay.gd" id="2_t7slg"]
@@ -43,8 +43,14 @@ disable_receive_shadows = true
 material = SubResource("StandardMaterial3D_miuoa")
 size = Vector3(0.05, 1, 0.05)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_0mhxp"]
+radius = 0.05
+
 [sub_resource type="PrismMesh" id="PrismMesh_8run4"]
 size = Vector3(0.2, 0.2, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p7u8a"]
+size = Vector3(0.1, 0.2, 0.1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_hrtbj")
@@ -62,7 +68,7 @@ script = ExtResource("2_t7slg")
 dog_path = NodePath("../../Dog")
 object_path = NodePath("../../Object")
 velocity_path = NodePath("../../Object/VelocityArrow")
-tracking_path = NodePath("TrackingEdit")
+tracking_path = NodePath("VariablePanel/TrackingEdit")
 
 [node name="TimePanel" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
@@ -142,253 +148,351 @@ anchor_right = 0.263889
 anchor_bottom = 0.691358
 metadata/_edit_use_anchors_ = true
 
-[node name="Volume" type="Label" parent="CanvasLayer/Control"]
+[node name="Volume" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486145
 anchor_top = 0.0864198
 anchor_right = 0.159726
 anchor_bottom = 0.135803
+offset_left = 3.16969
+offset_top = -26.5679
+offset_right = 37.8362
+offset_bottom = -20.3212
 text = "Volume:"
 metadata/_edit_use_anchors_ = true
 
-[node name="VolumeEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="VolumeEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.112847
 anchor_top = 0.0864198
 anchor_right = 0.171061
 anchor_bottom = 0.135802
+offset_left = 60.2081
+offset_top = -26.5679
+offset_right = 111.902
+offset_bottom = -15.3208
 text = "0.0052"
 metadata/_edit_use_anchors_ = true
 
-[node name="DragCoefficientX" type="Label" parent="CanvasLayer/Control"]
+[node name="DragCoefficientX" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.135802
 anchor_right = 0.172743
 anchor_bottom = 0.185185
+offset_left = 3.16667
+offset_top = -14.3211
+offset_right = 113.396
+offset_bottom = -8.07431
 text = "Drag Coefficient X:"
 metadata/_edit_use_anchors_ = true
 
-[node name="DragEditX" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="DragEditX" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.170139
 anchor_top = 0.135802
 anchor_right = 0.228353
 anchor_bottom = 0.185185
+offset_left = 111.083
+offset_top = -14.3211
+offset_right = 162.777
+offset_bottom = -3.07431
 text = "0.47"
 metadata/_edit_use_anchors_ = true
 
-[node name="AreaCrossSectionX" type="Label" parent="CanvasLayer/Control"]
+[node name="AreaCrossSectionX" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0490486
 anchor_top = 0.185185
 anchor_right = 0.207035
 anchor_bottom = 0.234568
+offset_left = 3.55517
+offset_top = -2.07413
+offset_right = 143.847
+offset_bottom = 4.17268
 text = "Area of Cross Section X:"
 metadata/_edit_use_anchors_ = true
 
-[node name="CrossSectionAreaX" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="CrossSectionAreaX" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.201389
 anchor_top = 0.185185
 anchor_right = 0.259603
 anchor_bottom = 0.234568
+offset_left = 138.833
+offset_top = -2.07413
+offset_right = 190.527
+offset_bottom = 9.17268
 text = "0.008"
 metadata/_edit_use_anchors_ = true
 
-[node name="DragCoefficientY" type="Label" parent="CanvasLayer/Control"]
+[node name="DragCoefficientY" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.234568
 anchor_right = 0.172743
 anchor_bottom = 0.283951
+offset_left = 3.16667
+offset_top = 10.1729
+offset_right = 113.396
+offset_bottom = 16.4197
 text = "Drag Coefficient Y:"
 metadata/_edit_use_anchors_ = true
 
-[node name="DragEditY" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="DragEditY" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.170139
 anchor_top = 0.234568
 anchor_right = 0.228353
 anchor_bottom = 0.283951
+offset_left = 111.083
+offset_top = 10.1729
+offset_right = 162.777
+offset_bottom = 21.4197
 text = "0.47"
 metadata/_edit_use_anchors_ = true
 
-[node name="AreaCrossSectionY" type="Label" parent="CanvasLayer/Control"]
+[node name="AreaCrossSectionY" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0490486
 anchor_top = 0.283951
 anchor_right = 0.207035
 anchor_bottom = 0.333334
+offset_left = 3.55517
+offset_top = 22.4199
+offset_right = 143.847
+offset_bottom = 28.6667
 text = "Area of Cross Section Y:"
 metadata/_edit_use_anchors_ = true
 
-[node name="CrossSectionAreaY" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="CrossSectionAreaY" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.201389
 anchor_top = 0.283951
 anchor_right = 0.259603
 anchor_bottom = 0.333334
+offset_left = 138.833
+offset_top = 22.4199
+offset_right = 190.527
+offset_bottom = 33.6667
 text = "0.008"
 metadata/_edit_use_anchors_ = true
 
-[node name="ObjectOffset" type="Label" parent="CanvasLayer/Control"]
+[node name="ObjectOffset" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.333334
 anchor_right = 0.159722
 anchor_bottom = 0.382716
+offset_left = 3.16667
+offset_top = 34.6668
+offset_right = 80.8334
+offset_bottom = 40.914
 text = "Object Offset:"
 metadata/_edit_use_anchors_ = true
 
-[node name="ObjectEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="ObjectEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15234
 anchor_top = 0.333334
 anchor_right = 0.210554
 anchor_bottom = 0.382716
+offset_left = 95.2779
+offset_top = 34.6668
+offset_right = 146.972
+offset_bottom = 45.914
 text = "-0.5"
 metadata/_edit_use_anchors_ = true
 
-[node name="DogOffset" type="Label" parent="CanvasLayer/Control"]
+[node name="DogOffset" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.382717
 anchor_right = 0.159722
 anchor_bottom = 0.432099
-offset_top = 1.52588e-05
+offset_left = 3.16667
+offset_top = 46.9138
+offset_right = 60.8334
+offset_bottom = 53.161
 text = "Dog Offset:"
 metadata/_edit_use_anchors_ = true
 
-[node name="DogEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="DogEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.131507
 anchor_top = 0.382717
 anchor_right = 0.189721
 anchor_bottom = 0.432099
-offset_top = 1.52588e-05
+offset_left = 76.7782
+offset_top = 46.9138
+offset_right = 128.472
+offset_bottom = 58.161
 text = "0.5"
 metadata/_edit_use_anchors_ = true
 
-[node name="TrackingConstant" type="Label" parent="CanvasLayer/Control"]
+[node name="TrackingConstant" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0490416
 anchor_top = 0.432099
 anchor_right = 0.178382
 anchor_bottom = 0.481482
+offset_left = 3.54895
+offset_top = 59.1606
+offset_right = 118.403
+offset_bottom = 65.4073
 text = "Tracking Constant: "
 metadata/_edit_use_anchors_ = true
 
-[node name="TrackingEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="TrackingEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.180118
 anchor_top = 0.432099
 anchor_right = 0.238332
 anchor_bottom = 0.481481
-text = "1.0"
+offset_left = 119.945
+offset_top = 59.1606
+offset_right = 171.639
+offset_bottom = 70.4078
+text = "0.1"
 metadata/_edit_use_anchors_ = true
 
-[node name="TrackingWeight" type="Label" parent="CanvasLayer/Control"]
+[node name="TrackingWeight" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.481482
 anchor_right = 0.164062
 anchor_bottom = 0.530865
+offset_left = 3.16667
+offset_top = 71.4075
+offset_right = 105.688
+offset_bottom = 77.6543
 text = "Tracking Weight: "
 metadata/_edit_use_anchors_ = true
 
-[node name="WeightEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="WeightEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.179688
 anchor_top = 0.481481
 anchor_right = 0.237902
 anchor_bottom = 0.530864
-text = "1.0"
+offset_left = 119.563
+offset_top = 71.4073
+offset_right = 171.257
+offset_bottom = 82.6541
+text = "0.0166667"
 metadata/_edit_use_anchors_ = true
 
-[node name="InitialVelocity" type="Label" parent="CanvasLayer/Control"]
+[node name="InitialVelocity" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.54321
 anchor_right = 0.159722
 anchor_bottom = 0.592593
-offset_bottom = 3.05176e-05
+offset_left = 3.16667
+offset_top = 86.7161
+offset_right = 87.8334
+offset_bottom = 92.9629
 text = "Initial Velocity:
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="VelocityEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="VelocityEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15191
 anchor_top = 0.54321
 anchor_right = 0.210124
 anchor_bottom = 0.592593
-offset_top = 3.05176e-05
+offset_left = 94.8961
+offset_top = 86.7161
+offset_right = 146.59
+offset_bottom = 97.963
 text = "2.26"
 metadata/_edit_use_anchors_ = true
 
-[node name="InitialAngle" type="Label" parent="CanvasLayer/Control"]
+[node name="InitialAngle" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.592593
 anchor_right = 0.159722
 anchor_bottom = 0.641976
-offset_bottom = 3.05176e-05
+offset_left = 3.16667
+offset_top = 98.9631
+offset_right = 69.8334
+offset_bottom = 105.21
 text = "Initial Angle:"
 metadata/_edit_use_anchors_ = true
 
-[node name="AngleEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="AngleEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.138021
 anchor_top = 0.592593
 anchor_right = 0.196235
 anchor_bottom = 0.641975
-offset_top = -3.05176e-05
+offset_left = 82.5627
+offset_top = 98.9631
+offset_right = 134.257
+offset_bottom = 110.21
 text = "45.0"
 metadata/_edit_use_anchors_ = true
 
-[node name="InitialHeight" type="Label" parent="CanvasLayer/Control"]
+[node name="InitialHeight" type="Label" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0486111
 anchor_top = 0.641976
 anchor_right = 0.159722
 anchor_bottom = 0.691359
-offset_bottom = -3.05176e-05
+offset_left = 3.16667
+offset_top = 111.21
+offset_right = 77.8334
+offset_bottom = 117.457
 text = "Initial Height:"
 metadata/_edit_use_anchors_ = true
 
-[node name="HeightEdit" type="LineEdit" parent="CanvasLayer/Control"]
+[node name="HeightEdit" type="LineEdit" parent="CanvasLayer/Control/VariablePanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.144965
 anchor_top = 0.641976
 anchor_right = 0.203179
 anchor_bottom = 0.691358
-offset_top = -3.05176e-05
+offset_left = 88.7289
+offset_top = 111.21
+offset_right = 140.423
+offset_bottom = 122.457
 text = "1.0"
+metadata/_edit_use_anchors_ = true
+
+[node name="SimulateButton" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.826389
+anchor_top = 0.0864198
+anchor_right = 0.965278
+anchor_bottom = 0.209877
+text = "simulate"
 metadata/_edit_use_anchors_ = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -416,6 +520,11 @@ visible = false
 mesh = SubResource("PrismMesh_xartr")
 skeleton = NodePath("../..")
 
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Object"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object/CharacterBody3D"]
+shape = SubResource("SphereShape3D_0mhxp")
+
 [node name="Dog" type="Node3D" parent="."]
 transform = Transform3D(0.0174524, 0.999848, -8.74228e-08, 0.999848, -0.0174524, 0, -1.52573e-09, -8.74095e-08, -1, 0.5, 0, 0)
 
@@ -423,15 +532,22 @@ transform = Transform3D(0.0174524, 0.999848, -8.74228e-08, 0.999848, -0.0174524,
 transform = Transform3D(-1.31134e-07, -1, -8.74228e-08, -1, 1.31134e-07, 0, 1.14641e-14, 8.74228e-08, -1, 0.1, 0, 1.74846e-08)
 mesh = SubResource("PrismMesh_8run4")
 
-[connection signal="text_changed" from="CanvasLayer/Control/VolumeEdit" to="." method="_on_volume_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/DragEditX" to="." method="_on_drag_edit_x_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/CrossSectionAreaX" to="." method="_on_cross_section_area_x_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/DragEditY" to="." method="_on_drag_edit_y_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/CrossSectionAreaY" to="." method="_on_cross_section_area_y_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/ObjectEdit" to="." method="_on_object_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/DogEdit" to="." method="_on_dog_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/TrackingEdit" to="." method="_on_tracking_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/WeightEdit" to="." method="_on_weight_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/VelocityEdit" to="." method="_on_velocity_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/AngleEdit" to="." method="_on_angle_edit_text_changed"]
-[connection signal="text_changed" from="CanvasLayer/Control/HeightEdit" to="." method="_on_height_edit_text_changed"]
+[node name="Area3D" type="Area3D" parent="Dog"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dog/Area3D"]
+transform = Transform3D(1, 1.33364e-16, 4.44089e-16, 1.33363e-16, 1, 0, -4.44089e-16, -2.84217e-14, 1, 0.15, -0.002, 0)
+shape = SubResource("BoxShape3D_p7u8a")
+
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/VolumeEdit" to="." method="_on_volume_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/DragEditX" to="." method="_on_drag_edit_x_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/CrossSectionAreaX" to="." method="_on_cross_section_area_x_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/DragEditY" to="." method="_on_drag_edit_y_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/CrossSectionAreaY" to="." method="_on_cross_section_area_y_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/ObjectEdit" to="." method="_on_object_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/DogEdit" to="." method="_on_dog_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/TrackingEdit" to="." method="_on_tracking_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/WeightEdit" to="." method="_on_weight_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/VelocityEdit" to="." method="_on_velocity_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/AngleEdit" to="." method="_on_angle_edit_text_changed"]
+[connection signal="text_changed" from="CanvasLayer/Control/VariablePanel/HeightEdit" to="." method="_on_height_edit_text_changed"]
+[connection signal="pressed" from="CanvasLayer/Control/SimulateButton" to="." method="_on_simulate_button_pressed"]

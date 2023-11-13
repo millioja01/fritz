@@ -15,9 +15,17 @@ var volume := 0.0052 # l
 var drag_coefficient := 0.47 # Cd
 var area_of_cross_section := 0.008 # Ac
 var simulation_time := 0.0 # t
-var tracking_constant := 1.0
-var tracking_weighting := 1.0
+var tracking_constant := 0.1
+var tracking_weighting := 0.0166667
 
+var is_testing := false
+var allowed_error := deg_to_rad(22.5)
+var total_tries := 10
+var deviance := 2.0
+var x_error := 0.0
+var y_error := 0.0
+var current_try := 1
+var successes := 0
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("hide"):
@@ -25,6 +33,10 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_testing:
+		testing(delta)
+		return
+	
 	if %TimeCheckBox.button_pressed:
 		simulation_time += delta * %TimeMultiplier.text.to_float()
 		if simulation_time > %TimeSlider.max_value:
@@ -40,11 +52,55 @@ func _physics_process(delta: float) -> void:
 	set_object_position(get_x_position(simulation_time), get_y_position(simulation_time))
 	set_object_velocity(get_x_velocity(simulation_time), get_y_velocity(simulation_time))
 	
-	update_dog_angle(simulation_time, $Dog.position.x)
 	$Dog.position.x = get_sum_of_dog_change(delta, simulation_time) + dog_x_offset
+	update_dog_angle(simulation_time, $Dog.position.x)
+
+
+func _on_simulate_button_pressed() -> void:
+	x_error = (randf() - 0.5) * deviance * 2.0
+	y_error = (randf() - 0.5) * deviance * 2.0
+	current_try = 1
+	successes = 0
+	simulation_time = 0.0
+	is_testing = true
+
+
+func testing(delta: float) -> void:
+	if current_try > 10:
+			print(str(successes) + "/" + str(total_tries))
+			is_testing = false
+			return
 	
-	print(rad_to_deg(get_tracking_angle(simulation_time, $Dog.position.x)))
-#	print(get_x_velocity(simulation_time))
+	if $Dog/Area3D.has_overlapping_bodies():
+		var angle := atan(get_y_velocity(simulation_time) / -get_x_velocity(simulation_time))
+		angle -= get_dog_angle(simulation_time, get_sum_of_dog_change(delta, simulation_time) + dog_x_offset)
+		angle = abs(angle)
+		print(rad_to_deg(angle))
+		
+		if angle <= allowed_error:
+			successes += 1
+			print("success")
+		else:
+			print("angle is incorrect")
+		
+		x_error = (randf() - 0.5) * deviance * 2.0
+		y_error = (randf() - 0.5) * deviance * 2.0
+		simulation_time = 0.0
+		current_try += 1
+	elif get_y_position(simulation_time) < 0.0:
+		x_error = (randf() - 0.5) * deviance * 2.0
+		y_error = (randf() - 0.5) * deviance * 2.0
+		simulation_time = 0.0
+		current_try += 1
+		print("hit ground")
+	
+	simulation_time += delta * $CanvasLayer/Control/TimePanel/TimeMultiplier.text.to_float()
+	
+	set_object_position(get_x_position(simulation_time), get_y_position(simulation_time))
+	set_object_velocity(get_x_velocity(simulation_time), get_y_velocity(simulation_time))
+	
+	$Dog.position.x = get_sum_of_dog_change(delta, simulation_time) + dog_x_offset
+	update_dog_angle(simulation_time, $Dog.position.x)
 
 
 func set_object_position(x_position: float, y_position: float) -> void:
@@ -103,7 +159,7 @@ func get_velocity_angle(time: float, dog_x_position: float) -> float:
 
 func get_tracking_angle(time: float, dog_x_position: float) -> float:
 	var velocity_point := Vector2(get_x_position(time), get_y_position(time))
-	velocity_point += tracking_constant * Vector2(get_x_velocity(time), get_y_velocity(time))
+	velocity_point += tracking_constant * Vector2(get_x_velocity(time) + x_error, get_y_velocity(time) + y_error)
 	var angle := atan(velocity_point.y / (velocity_point.x - dog_x_position))
 	
 	if angle < 0.0:
@@ -211,5 +267,4 @@ func _on_angle_edit_text_changed(new_text: String) -> void:
 func _on_height_edit_text_changed(new_text: String) -> void:
 	if new_text.to_float() == 0.0:
 		return
-	
 	initial_height = new_text.to_float()
