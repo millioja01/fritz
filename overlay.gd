@@ -43,12 +43,12 @@ func _draw() -> void:
 	draw_string(default_font, dog_angle_position, "%.02f°" % dog_angle)
 	draw_string(default_font, velocity_angle_position, "%.02f°" % velocity_angle)
 	
-	var formula_string := "tracking_constant * x_velocity * cos(velocity_angle - dog_angle)"
-	var actual_formula := "%.02f * %.02f * cos(%.02f° - %.02f°)" % [tracking_constant, velocity.basis.y.x, velocity_angle, dog_angle]
-	var simplified_formula := "%.02f * %.02f" % [tracking_constant * velocity.basis.y.x, cos(deg_to_rad(velocity_angle - dog_angle))]
-	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 50.0), formula_string)
-	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 30.0), actual_formula)
-	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 10.0), simplified_formula)
+#	var formula_string := "tracking_constant * x_velocity * cos(velocity_angle - dog_angle)"
+#	var actual_formula := "%.02f * %.02f * cos(%.02f° - %.02f°)" % [tracking_constant, velocity.basis.y.x, velocity_angle, dog_angle]
+#	var simplified_formula := "%.02f * %.02f" % [tracking_constant * velocity.basis.y.x, cos(deg_to_rad(velocity_angle - dog_angle))]
+#	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 50.0), formula_string)
+#	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 30.0), actual_formula)
+#	draw_string(default_font, Vector2(dog_position.x + 80.0, dog_position.y - 10.0), simplified_formula)
 
 
 func _get_dog_angle() -> float:
