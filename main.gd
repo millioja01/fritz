@@ -19,11 +19,12 @@ var tracking_constant := 0.1
 var tracking_weighting := 0.0166667
 
 var is_testing := false
-var allowed_error := deg_to_rad(22.5)
-var total_tries := 20
-var deviance := 2.0
-var x_error := 0.0
-var y_error := 0.0
+var allowed_error := deg_to_rad(15.0)
+var total_tries := 20 # how many attempts the dog does
+var deviance := deg_to_rad(10.0) # how much error there can be in each direction
+#var x_error := 0.0
+#var y_error := 0.0
+var error := 0.0
 var current_try := 1
 var successes := 0
 var max_allowed_error := 0.0
@@ -59,8 +60,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_simulate_button_pressed() -> void:
 	max_allowed_error = 0.0
-	x_error = (randf() - 0.5) * deviance * 2.0
-	y_error = (randf() - 0.5) * deviance * 2.0
+#	x_error = (randf() - 0.5) * deviance * 2.0
+#	y_error = (randf() - 0.5) * deviance * 2.0
+	error = (randf() - 0.5) * deviance * 2.0
 	current_try = 1
 	successes = 0
 	simulation_time = 0.0
@@ -82,19 +84,23 @@ func testing(delta: float) -> void:
 		
 		if angle <= allowed_error:
 			successes += 1
-			if Vector2(x_error, y_error).length() > max_allowed_error:
-				max_allowed_error = Vector2(x_error, y_error).length()
+			if error > max_allowed_error:
+				max_allowed_error = error
+#			if Vector2(x_error, y_error).length() > max_allowed_error:
+#				max_allowed_error = Vector2(x_error, y_error).length()
 			print("success")
 		else:
 			print("angle is incorrect")
 		
-		x_error = (randf() - 0.5) * deviance * 2.0
-		y_error = (randf() - 0.5) * deviance * 2.0
+#		x_error = (randf() - 0.5) * deviance * 2.0
+#		y_error = (randf() - 0.5) * deviance * 2.0
+		error = (randf() - 0.5) * deviance * 2.0
 		simulation_time = 0.0
 		current_try += 1
 	elif get_y_position(simulation_time) < 0.0:
-		x_error = (randf() - 0.5) * deviance * 2.0
-		y_error = (randf() - 0.5) * deviance * 2.0
+#		x_error = (randf() - 0.5) * deviance * 2.0
+#		y_error = (randf() - 0.5) * deviance * 2.0
+		error = (randf() - 0.5) * deviance * 2.0
 		simulation_time = 0.0
 		current_try += 1
 		print("hit ground")
@@ -164,7 +170,8 @@ func get_velocity_angle(time: float, dog_x_position: float) -> float:
 
 func get_tracking_angle(time: float, dog_x_position: float) -> float:
 	var velocity_point := Vector2(get_x_position(time), get_y_position(time))
-	velocity_point += tracking_constant * Vector2(get_x_velocity(time) + x_error, get_y_velocity(time) + y_error)
+#	velocity_point += tracking_constant * Vector2(get_x_velocity(time) + x_error, get_y_velocity(time) + y_error)
+	velocity_point += tracking_constant * Vector2(get_x_velocity(time), get_y_velocity(time)).rotated(error)
 	var angle := atan(velocity_point.y / (velocity_point.x - dog_x_position))
 	
 	if angle < 0.0:
