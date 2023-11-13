@@ -20,12 +20,13 @@ var tracking_weighting := 0.0166667
 
 var is_testing := false
 var allowed_error := deg_to_rad(22.5)
-var total_tries := 10
+var total_tries := 20
 var deviance := 2.0
 var x_error := 0.0
 var y_error := 0.0
 var current_try := 1
 var successes := 0
+var max_allowed_error := 0.0
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("hide"):
@@ -57,6 +58,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_simulate_button_pressed() -> void:
+	max_allowed_error = 0.0
 	x_error = (randf() - 0.5) * deviance * 2.0
 	y_error = (randf() - 0.5) * deviance * 2.0
 	current_try = 1
@@ -66,8 +68,10 @@ func _on_simulate_button_pressed() -> void:
 
 
 func testing(delta: float) -> void:
-	if current_try > 10:
+	if current_try > total_tries:
 			print(str(successes) + "/" + str(total_tries))
+			print(float(successes) / float(total_tries) * 100.0, "% success rate")
+			print("Max allowed error: ", max_allowed_error)
 			is_testing = false
 			return
 	
@@ -75,10 +79,11 @@ func testing(delta: float) -> void:
 		var angle := atan(get_y_velocity(simulation_time) / -get_x_velocity(simulation_time))
 		angle -= get_dog_angle(simulation_time, get_sum_of_dog_change(delta, simulation_time) + dog_x_offset)
 		angle = abs(angle)
-		print(rad_to_deg(angle))
 		
 		if angle <= allowed_error:
 			successes += 1
+			if Vector2(x_error, y_error).length() > max_allowed_error:
+				max_allowed_error = Vector2(x_error, y_error).length()
 			print("success")
 		else:
 			print("angle is incorrect")
